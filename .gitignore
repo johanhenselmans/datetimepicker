@@ -1,0 +1,5 @@
+packages
+web/out
+pubspec.lock
+.buildlog
+deploy

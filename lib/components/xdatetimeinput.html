@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+  <body>
+    <element name="xdatetimeinput" constructor="XDateTimeInput" extends="span" apply-author-styles>
+      <template>        
+        <span class="xdatetimeinput_parent">
+          <template if="showDiv && initialized">
+            <div class="xdatetimeinput_datePicker {{closing?'xdatetimeinput_closing':''}}">         
+              <div class="xdatetimeinput_yearMonth">
+                <button class="xdatetimeinput_button" on-click="previousMonth()">&larr;</button>
+                {{monthText}}
+                <button class="xdatetimeinput_button" on-click="nextMonth()">&rarr;</button>
+                <button class="xdatetimeinput_button" on-click="previousYear()">&larr;</button>
+                {{date.year}}
+                <button class="xdatetimeinput_button" on-click="nextYear()">&rarr;</button>                
+              </div>
+              <div>
+                <table>
+                  <thead>
+                    <tr template iterate="weekday in weekdayTexts">
+                      <th class="xdatetimeinput_weekday">{{weekday}}</th>
+                    </tr>
+                  </thead>
+                  <tbody template iterate="weekList in calendarList">
+                    <tr template iterate="day in weekList">
+                      <td class="xdatetimeinput_day">
+                        <template if="day!=null">
+                          <div class="xdatetimeinput_selectable{{isToday(day)?' xdatetimeinput_selected':''}}" on-click="chooseDay(day)">{{day}}</div>
+                        </template>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="xdatetimeinput_hourMiute">
+                <button class="xdatetimeinput_button" on-click="previousHour()">&larr;</button>
+                {{date.hour}}
+                <button class="xdatetimeinput_button" on-click="nextHour()">&rarr;</button>
+                <button class="xdatetimeinput_button" on-click="previousMinute()">&larr;</button>
+                {{date.minute}}
+                <button class="xdatetimeinput_button" on-click="nextMinute()">&rarr;</button>                
+              </div>
+            </div>
+          </template>          
+        </span>
+        <input id="{{inputid}}" type="text" on-focus="show()" on-blur="close()" bind-value="value" on-change="onValueChange()" placeholder="{{inputplaceholder}}" maxlength="{{inputmaxlength}}">
+      </template>
+      <script type="application/dart" src="xdatetimeinput.dart"></script>
+      <style>
+.xdatetimeinput_parent{
+  display:inline-block;
+  position:relative;
+}
+.xdatetimeinput_datePicker{
+  position:absolute;
+  margin-top:10px;
+  position:absolute;
+  padding:5px 5px 5px 5px;
+  z-index:999;
+  border:1px solid;
+  background-color:#fff;
+}
+.xdatetimeinput_selected{
+  font-weight:bold;
+  border:1px solid;
+}
+.xdatetimeinput_selectable:hover{
+  cursor:pointer;
+}
+.xdatetimeinput_minute{
+  text-align:center;
+}
+.xdatetimeinput_hour{
+  text-align:center;
+}
+.xdatetimeinput_day{
+  text-align:center;
+}
+.xdatetimeinput_weekday{
+  text-align:center;
+}
+.xdatetimeinput_yearMonth{
+  text-align:center;
+  white-space:no-wrap;
+}
+.xdatetimeinput_close{
+  text-align:right;
+}
+.xdatetimeinput_button{
+  display:inline;
+}
+.xdatetimeinput_button:hover{
+  cursor:pointer;
+}
+.xdatetimeinput_closing{
+  opacity:0;
+  transition-property:opacity;
+  transition-duration:0.5s;
+}
+      </style>
+    </element>
+  </body>
+</html>
